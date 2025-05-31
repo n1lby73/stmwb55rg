@@ -5,7 +5,6 @@
  *      Author: n1lby73
  */
 
-
 #include "stm32wb55rg.h"
 #include "stm32wb55rg_gpioDrivers.h"
 
@@ -63,15 +62,31 @@ void toggleRedLed(){
 	}
 }
 
+void ledChaser(){
+
+	GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_NO_1, 1);
+	delay();
+	GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_NO_1, 0);
+	GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_NO_0, 1);
+	delay();
+	GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_NO_0, 0);
+	GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_NO_5, 1);
+	delay();
+	GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_NO_5, 0);
+
+
+
+}
+
 int main(void){
 
 	GPIO_HANDLE_t externalPb;
 
-	externalPb.pGPIOx = GPIOC;
+	externalPb.pGPIOx = GPIOA;
 	externalPb.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
 	externalPb.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_4;
 	externalPb.GPIO_PinConfig.GPIO_PinSpeed = GPIO_FAST_SPEED;
-	externalPb.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
+	externalPb.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PD;
 
 	GPIO_HANDLE_t greenLed;
 
@@ -105,6 +120,14 @@ int main(void){
 	externalBlueLed.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
 	externalBlueLed.GPIO_PinConfig.GPIO_PinSpeed = GPIO_FAST_SPEED;
 
+	GPIO_HANDLE_t pb1;
+
+	pb1.pGPIOx = GPIOC;
+	pb1.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
+	pb1.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_4;
+	pb1.GPIO_PinConfig.GPIO_PinSpeed = GPIO_FAST_SPEED;
+	pb1.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
+
 	GPIO_HANDLE_t pb2;
 
 	pb2.pGPIOx = GPIOD;
@@ -121,8 +144,9 @@ int main(void){
 	pb3.GPIO_PinConfig.GPIO_PinSpeed = GPIO_FAST_SPEED;
 	pb3.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
 
-	GPIO_PeriClockControl(GPIOC, ENABLE);
+	GPIO_PeriClockControl(GPIOA, ENABLE);
 	GPIO_PeriClockControl(GPIOB, ENABLE);
+	GPIO_PeriClockControl(GPIOC, ENABLE);
 	GPIO_PeriClockControl(GPIOD, ENABLE);
 
 	GPIO_Init(&externalPb);
@@ -130,6 +154,7 @@ int main(void){
 	GPIO_Init(&redLed);
 	GPIO_Init(&blueLed);
 	GPIO_Init(&externalBlueLed);
+	GPIO_Init(&pb1);
 	GPIO_Init(&pb2);
 	GPIO_Init(&pb3);
 
@@ -145,6 +170,10 @@ int main(void){
 		// Toggle red led
 		toggleRedLed();
 
+		while(GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_4) == 1){
+
+			ledChaser();
+		}
 //		GPIO_ToggleOutputPin(GPIOB, GPIO_PIN_NO_5);
 
 		delay();
