@@ -26,7 +26,7 @@
  * @Note		-	none
 */
 
-void GPIO_Init(GPIO_HANDLE_t *pGPIOHandle){pin
+void GPIO_Init(GPIO_HANDLE_t *pGPIOHandle){
 
 	uint32_t temporaryVar = 0;
 
@@ -34,20 +34,44 @@ void GPIO_Init(GPIO_HANDLE_t *pGPIOHandle){pin
 
 	if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG){
 
-		temporaryVar = (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode << (2 * pGPIOHapinndle->GPIO_PinConfig.GPIO_PinNumber ));
+		temporaryVar = (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber ));
 
-		pGPIOHandle->pGPIOx->MODER &= ~(0x3 << (2 * pGPIOHandle->GPIO_PinConfig.GPpinIO_PinNumber));
-		pGPIOHandle->pGPIOx->MODER |= temporaryVar;pinpinpinpin
+		pGPIOHandle->pGPIOx->MODER &= ~(0x3 << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
+		pGPIOHandle->pGPIOx->MODER |= temporaryVar;
 
 	}else{
 
-		switch (uint32_t(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode)){
+		// Step 1: Determine the preferred edge detection and configure it
 
-			case ((uint32_t)GPIO_MODE_IT_FT):break;
-			case ((uint32_t)GPIO_MODE_IT_RT):break;
-			case ((uint32_t)GPIO_MODE_IT_RFT):break;
+		switch ((uint32_t)pGPIOHandle->GPIO_PinConfig.GPIO_PinMode){
+
+			case ((uint32_t)GPIO_MODE_IT_FT):
+
+				EXTI->FTSR1 |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+				EXTI->RTSR1 &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+
+			break;
+
+			case ((uint32_t)GPIO_MODE_IT_RT):
+
+				EXTI->RTSR1 |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+				EXTI->FTSR1 &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+
+			break;
+
+			case ((uint32_t)GPIO_MODE_IT_RFT):
+
+				EXTI->RTSR1 |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+				EXTI->FTSR1 |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
+
+			break;
 		}
 
+		// Step 2: Configure the GPIO port selection in SYSCFG_EXTICR
+
+		// Step 3: Enable the EXTI interrupt delivery using IMR
+
+		EXTI->IMR1 |= 1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber;
 	}
 
 	//2. Configure the speed
