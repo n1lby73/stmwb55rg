@@ -26,7 +26,7 @@
  * @Note		-	none
 */
 
-void GPIO_Init(GPIO_HANDLE_t *pGPIOHandle){
+void GPIO_Init(GPIO_HANDLE_t *pGPIOHandle){pin
 
 	uint32_t temporaryVar = 0;
 
@@ -34,13 +34,19 @@ void GPIO_Init(GPIO_HANDLE_t *pGPIOHandle){
 
 	if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG){
 
-		temporaryVar = (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber ));
+		temporaryVar = (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode << (2 * pGPIOHapinndle->GPIO_PinConfig.GPIO_PinNumber ));
 
-		pGPIOHandle->pGPIOx->MODER &= ~(0x3 << (2 * pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber));
-		pGPIOHandle->pGPIOx->MODER |= temporaryVar;
+		pGPIOHandle->pGPIOx->MODER &= ~(0x3 << (2 * pGPIOHandle->GPIO_PinConfig.GPpinIO_PinNumber));
+		pGPIOHandle->pGPIOx->MODER |= temporaryVar;pinpinpinpin
 
 	}else{
 
+		switch (uint32_t(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode)){
+
+			case ((uint32_t)GPIO_MODE_IT_FT):break;
+			case ((uint32_t)GPIO_MODE_IT_RT):break;
+			case ((uint32_t)GPIO_MODE_IT_RFT):break;
+		}
 
 	}
 
