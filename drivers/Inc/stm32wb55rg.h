@@ -1,4 +1,4 @@
-/*
+ /*
  * stm32wb55rg.h
  *
  *  Created on: May 21, 2025
@@ -157,6 +157,7 @@ typedef struct {
 #define GPIOH						((GPIO_RegDef_t*) GPIOH_BASEADDR)
 
 #define RCC							((RCC_RegDef_t*) RCC_BASEADDR)
+#define EXTI						((RCC_RedDef_t*) EXTI_BASEADDR)
 
 /* Clock Enable Macros for GPIOx Peripheral */
 
