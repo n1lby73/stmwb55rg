@@ -147,6 +147,42 @@ typedef struct {
 
 } RCC_RegDef_t;
 
+typedef struct {
+
+    _vo uint32_t RTSR1;        		// 0x00: Rising trigger selection register 1
+    _vo uint32_t FTSR1;        		// 0x04: Falling trigger selection register 1
+    _vo uint32_t SWIER1;       		// 0x08: Software interrupt event register 1
+    _vo uint32_t PR1;          		// 0x0C: Pending register 1
+
+    _vo uint32_t RESERVED0[4];     	// 0x10–0x1C: Reserved gap
+
+    _vo uint32_t RTSR2;        		// 0x20: Rising trigger selection register 2
+    _vo uint32_t FTSR2;        		// 0x24: Falling trigger selection register 2
+    _vo uint32_t SWIER2;       		// 0x28: Software interrupt event register 2
+    _vo uint32_t PR2;          		// 0x2C: Pending register 2
+
+    _vo uint32_t RESERVED[20];		// 0x30–0x7C: Reserved gap
+
+    _vo uint32_t IMR1;         		// 0x30: Interrupt mask register 1
+    _vo uint32_t EMR1;         		// 0x34: Event mask register 1
+
+    _vo uint32_t RESERVED1[2];     	// 0x88–0x8C: Reserved gap
+
+    _vo uint32_t IMR2;         		// 0x40: Interrupt mask register 2
+    _vo uint32_t EMR2;         		// 0x44: Event mask register 2
+
+    _vo uint32_t RESERVED2[10];    	// 0x98–0xBC: Reserved gap (0x48 is next usable, C1IMR1 starts at 0x80)
+
+    _vo uint32_t C2IMR1;       		// 0x80: CPU1 interrupt mask register 1
+    _vo uint32_t C2EMR1;       		// 0x84: CPU1 event mask register 1
+
+    _vo uint32_t RESERVED3[2];		// 0xC8–0xCC: Reserved gap
+
+    _vo uint32_t C2IMR2;       		// 0x98: CPU2 interrupt mask register 2
+    _vo uint32_t C2EMR2;       		// 0x9C: CPU2 event mask register 2
+
+} EXTI_RegDef_t;
+
 /* Peripheral definitions ( Peripheral base addresses typecasted to xxx_RegDef_t */
 
 #define GPIOA						((GPIO_RegDef_t*) GPIOA_BASEADDR)
