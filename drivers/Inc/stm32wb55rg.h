@@ -282,4 +282,18 @@ typedef struct{
 									  (x == GPIOC) ? 5:0\
 									)
 
+/*
+ * IRQ (Interrupt Request) Number of STMWB55RG
+ * NOTE: update these macros with valid values according to your MCU
+ * TODO: You may complete this list for other peripherals
+ */
+
+#define IRQ_NO_EXTI0				6
+#define IRQ_NO_EXTI1				7
+#define IRQ_NO_EXTI2				8
+#define IRQ_NO_EXTI3				9
+#define IRQ_NO_EXTI4				10
+#define IRQ_NO_EXTI9_5				23
+#define IRQ_NO_EXTI15_10			40
+
 #endif /* INC_STM32WB55RG_H_ */
