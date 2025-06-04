@@ -210,6 +210,7 @@ typedef struct{
 
 #define RCC							((RCC_RegDef_t*) RCC_BASEADDR)
 #define EXTI						((EXTI_RegDef_t*) EXTI_BASEADDR)
+#define SYSCFG						((SYSCFG_RegDef_t*) SYSCFG_BASEADDR)
 
 /* Clock Enable Macros for GPIOx Peripheral */
 
@@ -272,5 +273,13 @@ typedef struct{
 #define GPIOD_REG_RESET()			do{ (RCC -> AHB2RSTR |= (1 << 3)); (RCC -> AHB2RSTR &= ~(1 << 3)); } while (0)
 #define GPIOE_REG_RESET()			do{ (RCC -> AHB2RSTR |= (1 << 4)); (RCC -> AHB2RSTR &= ~(1 << 4)); } while (0)
 #define GPIOH_REG_RESET()			do{ (RCC -> AHB2RSTR |= (1 << 7)); (RCC -> AHB2RSTR &= ~(1 << 7)); } while (0)
+
+#define GPIO_BASEADDR_TO_CODE(x)	( (x == GPIOA) ? 0:\
+									  (x == GPIOB) ? 1:\
+									  (x == GPIOC) ? 2:\
+									  (x == GPIOC) ? 3:\
+									  (x == GPIOC) ? 4:\
+									  (x == GPIOC) ? 5:0\
+									)
 
 #endif /* INC_STM32WB55RG_H_ */
