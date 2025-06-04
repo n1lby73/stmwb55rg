@@ -319,7 +319,7 @@ void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint8_t Value){
 
 void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t ENorDI){
 
-	switch (EnorDi) {
+	switch (ENorDI) {
 	    case ENABLE:
 	        switch (IRQNumber) {
 	            case 0 ... 31:
