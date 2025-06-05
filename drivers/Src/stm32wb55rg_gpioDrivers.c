@@ -323,19 +323,15 @@ void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t ENorDI){
 	    case ENABLE:
 	        switch (IRQNumber) {
 	            case 0 ... 31:
-	                NVIC->ISER[0] = (1 << IRQNumber);
+//	                NVIC->ISER[0] = (1 << IRQNumber);
 	                break;
 
 	            case 32 ... 63:
-	                NVIC->ISER[1] = (1 << (IRQNumber % 32));
+//	                NVIC->ISER[1] = (1 << (IRQNumber % 32));
 	                break;
 
 	            case 64 ... 95:
-	                NVIC->ISER[2] = (1 << (IRQNumber % 32));
-	                break;
-
-	            default:
-	                // handle invalid IRQNumber
+//	                NVIC->ISER[2] = (1 << (IRQNumber % 32));
 	                break;
 	        }
 	        break;
@@ -343,15 +339,15 @@ void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t ENorDI){
 	    case DISABLE:
 	        switch (IRQNumber) {
 	            case 0 ... 31:
-	                NVIC->ICER[0] = (1 << IRQNumber);
+//	                NVIC->ICER[0] = (1 << IRQNumber);
 	                break;
 
 	            case 32 ... 63:
-	                NVIC->ICER[1] = (1 << (IRQNumber % 32));
+//	                NVIC->ICER[1] = (1 << (IRQNumber % 32));
 	                break;
 
 	            case 64 ... 95:
-	                NVIC->ICER[2] = (1 << (IRQNumber % 32));
+//	                NVIC->ICER[2] = (1 << (IRQNumber % 32));
 	                break;
 
 	            default:
