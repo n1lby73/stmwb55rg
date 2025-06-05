@@ -19,6 +19,22 @@
 #define GPIO_PinSet					ENABLE
 #define GPIO_PinReset				DISABLE
 
+/* Processor specific details
+ *
+ * Processor NVIC ISERx Register addresses
+ *
+ */
+
+#define NVIC_ISER0					(_vo uint32_t*)0xE000E100
+#define NVIC_ISER1					(_vo uint32_t*)0xE000E104
+#define NVIC_ISER2					(_vo uint32_t*)0xE000E108
+#define NVIC_ISER3					(_vo uint32_t*)0xE000E10c
+
+#define NVIC_ICER0					(_vo uint32_t*)0xE000E180
+#define NVIC_ICSER1					(_vo uint32_t*)0xE000E184
+#define NVIC_ICER2					(_vo uint32_t*)0xE000E188
+#define NVIC_ICER3					(_vo uint32_t*)0xE000E18c
+
 /* Memory Address Definition */
 
 #define FLASH_BASEADDR				0x08000000U
