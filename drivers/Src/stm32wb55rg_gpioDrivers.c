@@ -317,21 +317,21 @@ void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint8_t Value){
  * @Note		-	none
 */
 
-void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t ENorDI){
+void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t ENorDI){
 
 	switch (ENorDI) {
 	    case ENABLE:
 	        switch (IRQNumber) {
 	            case 0 ... 31:
-//	                NVIC->ISER[0] = (1 << IRQNumber);
+	                *NVIC_ISER0 |= (1 << IRQNumber);
 	                break;
 
 	            case 32 ... 63:
-//	                NVIC->ISER[1] = (1 << (IRQNumber % 32));
+	                *NVIC_ISER1 |= (1 << IRQNumber % 32);
 	                break;
 
 	            case 64 ... 95:
-//	                NVIC->ISER[2] = (1 << (IRQNumber % 32));
+	                *NVIC_ISER2 |= (1 << IRQNumber % 64);
 	                break;
 	        }
 	        break;
@@ -339,23 +339,27 @@ void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t ENorDI){
 	    case DISABLE:
 	        switch (IRQNumber) {
 	            case 0 ... 31:
-//	                NVIC->ICER[0] = (1 << IRQNumber);
+	                *NVIC_ICER0 |= (1 << IRQNumber);
 	                break;
 
 	            case 32 ... 63:
-//	                NVIC->ICER[1] = (1 << (IRQNumber % 32));
+	                *NVIC_ICER1 |= (1 << IRQNumber % 32);
 	                break;
 
 	            case 64 ... 95:
-//	                NVIC->ICER[2] = (1 << (IRQNumber % 32));
-	                break;
-
-	            default:
-	                // handle invalid IRQNumber
+	                *NVIC_ICER2 |= (1 << IRQNumber % 64);
 	                break;
 	        }
 	        break;
 	}
+}
+
+void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint8_t IRQPriority){
+
+	uint8_t iprx = IRQNumber / 4;
+	uint8_t iprx_section = IRQNumber % 4;
+
+	*(NVIC_PR_BASE_ADDR + (iprx*4)) |= (IRQPriority << ((8 * iprx_section)+(8-NO_PR_BITS_IMPLEMENTED)));
 }
 
 /**********FUNCTION DOCUMENTATION*****************
@@ -375,6 +379,8 @@ void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t ENorDI){
 
 void GPIO_IRQHandling(uint8_t PinNumber){
 
+	if (EXTI->PR1 & (1 << PinNumber)){
 
-
+		EXTI->PR1 |= (1 << PinNumber);
+	}
 }
