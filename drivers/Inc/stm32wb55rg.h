@@ -31,9 +31,14 @@
 #define NVIC_ISER3					(_vo uint32_t*)0xE000E10c
 
 #define NVIC_ICER0					(_vo uint32_t*)0xE000E180
-#define NVIC_ICSER1					(_vo uint32_t*)0xE000E184
+#define NVIC_ICER1					(_vo uint32_t*)0xE000E184
 #define NVIC_ICER2					(_vo uint32_t*)0xE000E188
 #define NVIC_ICER3					(_vo uint32_t*)0xE000E18c
+
+// Processor Priority Register Address
+
+#define NVIC_PR_BASE_ADDR			(_vo uint32_t*)0xE000E400
+#define NO_PR_BITS_IMPLEMENTED		4;
 
 /* Memory Address Definition */
 
