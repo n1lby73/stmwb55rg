@@ -105,6 +105,18 @@ typedef struct{
 
 } GPIO_RegDef_t;
 
+typedef struct{
+
+	_vo uint32_t SPIx_CR1;
+	_vo uint32_t SPIx_CR2;
+	_vo uint32_t SPIx_SR;
+	_vo uint32_t SPIx_DR;
+	_vo uint32_t SPIx_CRCPR;
+	_vo uint32_t SPIx_RXCRCR;
+	_vo uint32_t SPIx_TXCRCR;
+
+} SPI_RegDef_t;
+
 typedef struct {
 
 	_vo uint32_t CR;				// RCC clock control register
