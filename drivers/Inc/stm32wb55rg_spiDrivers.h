@@ -50,5 +50,18 @@ void SPI_DeInit(SPI_RegDef_t *pGPIOx);
 
 void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t ENorDI);
 
+/* Data send and Receive */
+
+void SPI_SendData(SPI_Handle_t *pSPIx, uint8_t *pTxBuffer, uint32_t len);
+void SPI_ReceiveData(SPI_RegDef_t *pSPIx,uint8_t *pRxBuffer, uint32_t len);
+
+/* IRQ Configuration and IRQ Handling */
+
+void SPI_IRQInterruptConfig(uint8_t IRQNumber, uint8_t ENorDI);
+void SPI_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
+void SPI_IRQHandling(SPI_Handle_t *pHandle);
+
+/* Other peripheral control */
+
 
 #endif /* INC_STM32WB55RG_SPIDRIVERS_H_ */
