@@ -245,6 +245,9 @@ typedef struct{
 #define EXTI						((EXTI_RegDef_t*) EXTI_BASEADDR)
 #define SYSCFG						((SYSCFG_RegDef_t*) SYSCFG_BASEADDR)
 
+#define SPI1						((SPI_RegDef_t*) SPI1_BASEADDR)
+#define SPI2						((SPI_RegDef_t*) SPI2_BASEADDR)
+
 /* Clock Enable Macros for GPIOx Peripheral */
 
 #define GPIOA_PCLK_EN()				(RCC -> AHB2ENR |= (1 << 0))
