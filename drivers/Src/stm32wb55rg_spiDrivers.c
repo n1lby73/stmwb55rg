@@ -40,6 +40,68 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t ENorDI){
 
 void SPI_Init(SPI_Handle_t *pSPIxHandle){
 
+	// Configure the SPI_CR1 register
+
+	uint32_t tempReg = 0;
+
+	//1. Configure device mode
+
+	tempReg |= pSPIxHandle->SPIConfig.SPI_DeviceMode << 2;
+
+	//2. Configure Bus config
+
+	switch (pSPIxHandle->SPIConfig.SPI_BusConfig){
+
+		case SPI_BUS_CONFIG_FD:
+
+//			bidi (bi-directional mode) should be cleared
+
+			tempReg &= ~(1 << 15);
+
+			break;
+
+		case SPI_BUS_CONFIG_HD:
+
+//			bidi (bi-directional mode) should be set
+
+			tempReg |= (1 << 15);
+
+			break;
+
+		case SPI_BUS_CONFIG_SIMPLEX_RXONLY:
+
+//			bidi (bi-directional mode) should be cleared
+//			RXONLY bit should be set
+
+			tempReg &= ~(1 << 15);
+			tempReg |= (1 << 10);
+
+			break;
+
+	}
+
+	//3. Configure Clock Speed
+
+	tempReg |= pSPIxHandle->SPIConfig.SPI_SclkSpeed << 3;
+
+	//4. Configure DFF
+
+	tempReg |= pSPIxHandle->SPIConfig.SPI_DFF << 11;
+
+	//5. Configure CPOL
+
+	tempReg |= pSPIxHandle->SPIConfig.SPI_CPOL << 1;
+
+	//6. Configure CPHA
+
+	tempReg |= pSPIxHandle->SPIConfig.SPI_CPHA << 0;
+
+	//7. Configure SSM
+
+	tempReg |= pSPIxHandle->SPIConfig.SPI_SSM << 9;
+
+	pSPIxHandle->pSPIx->SPIx_CR1 = tempReg;
+
 }
 
 void SPI_Deinit(SPI_Handle_t *pSPIx){
