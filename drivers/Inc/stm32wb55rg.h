@@ -19,6 +19,18 @@
 #define GPIO_PinSet					ENABLE
 #define GPIO_PinReset				DISABLE
 
+/* Bit Position definition of SPI peripheral */
+
+#define SPI_CR1_CPHA				0
+#define SPI_CR1_CPOL				1
+#define SPI_CR1_MSTR				2
+#define SPI_CR1_BR					3
+#define SPI_CR1_SSM					9
+#define SPI_CR1_RXONLY				10
+#define SPI_CR1_CRCL				11
+#define SPI_CR1_BIDIMODE			15
+
+
 /* Processor specific details
  *
  * Processor NVIC ISERx Register addresses
