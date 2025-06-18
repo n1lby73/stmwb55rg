@@ -10,7 +10,47 @@
 
 #include "stm32wb55rg.h"
 
+/* @SPI_DeviceMode*/
 
+#define SPI_DEVICE_MODE_SLAVE							0
+#define SPI_DEVICE_MODE_MASTER							1
+
+/* @SPI_BusConfig */
+
+#define SPI_BUS_CONFIG_FD								1
+#define SPI_BUS_CONFIG_HD								2
+#define SPI_BUS_CONFIG_SIMPLEX_RXONLY					3
+
+/* @SPI_SclkSpeed */
+
+#define SPI_SCLCK_SPEED_DIV2							0
+#define SPI_SCLCK_SPEED_DIV4							1
+#define SPI_SCLCK_SPEED_DIV8							2
+#define SPI_SCLCK_SPEED_DIV16							3
+#define SPI_SCLCK_SPEED_DIV32							4
+#define SPI_SCLCK_SPEED_DIV64							5
+#define SPI_SCLCK_SPEED_DIV128							6
+#define SPI_SCLCK_SPEED_DIV256							7
+
+/* @SPI_DFF */
+
+#define SPI_DFF_8BITS									0
+#define SPI_DFF16BITS									1
+
+/* @SPI_CPOL */
+
+#define SPI_CPOL_LOW									0
+#define SPI_CPOL_HIGH									1
+
+/* @SPI_CPHA */
+
+#define SPI_CPHA_LOW									0
+#define SPI_CPHA_HIGH									1
+
+/* @SPI_SSM */
+
+#define SPI_SSM_SW										0
+#define SPI_SSM_HW										1
 /*
  * Configuration structure for SPIx peripheral
  */
@@ -43,8 +83,8 @@ typedef struct{
 
 // Initialize and De-initialize
 
-void SPI_Init(SPI_Handle_t *pGPIOHandle);
-void SPI_DeInit(SPI_RegDef_t *pGPIOx);
+void SPI_Init(SPI_Handle_t *pSPIxHandle);
+void SPI_DeInit(SPI_Handle_t *pGPIOx);
 
 // Peripheral Clock Setup
 
