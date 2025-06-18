@@ -49,8 +49,8 @@
 
 /* @SPI_SSM */
 
-#define SPI_SSM_SW										0
-#define SPI_SSM_HW										1
+#define SPI_SSM_DI										0
+#define SPI_SSM_EN										1
 /*
  * Configuration structure for SPIx peripheral
  */
