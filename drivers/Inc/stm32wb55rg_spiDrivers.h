@@ -51,6 +51,15 @@
 
 #define SPI_SSM_DI										0
 #define SPI_SSM_EN										1
+
+/*
+ * SPI related status flags definitions
+ */
+
+#define SPI_TXE_FLAG									(1 << SPI_SR_TXE)
+#define SPI_RXNE_FLAG									(1 << SPI_SR_RXNE)
+#define SPI_BUSY_FLAG									(1 << SPI_SR_BSY)
+
 /*
  * Configuration structure for SPIx peripheral
  */
@@ -92,7 +101,7 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t ENorDI);
 
 /* Data send and Receive */
 
-void SPI_SendData(SPI_Handle_t *pSPIx, uint8_t *pTxBuffer, uint32_t len);
+void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t len);
 void SPI_ReceiveData(SPI_RegDef_t *pSPIx,uint8_t *pRxBuffer, uint32_t len);
 
 /* IRQ Configuration and IRQ Handling */
