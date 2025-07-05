@@ -7,6 +7,18 @@
 
 #include "stm32wb55rg_spiDrivers.h"
 
+/* Helper function */
+
+uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t flagName){
+
+	if(pSPIx->SPIx_SR & flagName){
+
+		return FlagSet;
+	}
+
+	return FlagReset;
+}
+
 void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t ENorDI){
 
 	switch (ENorDI){
@@ -108,8 +120,36 @@ void SPI_Deinit(SPI_Handle_t *pSPIx){
 
 }
 
-void SPI_SendData(SPI_Handle_t *pSPIx, uint8_t *pTxBuffer, uint32_t len){
+void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t len){
 
+	while (len>0){
+
+		//1. wait until TXE is set
+
+		while (SPI_GetFlagStatus(pSPIx, SPI_TXE_FLAG) == FlagReset);
+
+		//2. check the DFF bit in CR1
+
+		if (pSPIx->SPIx_CR1 & (1 << SPI_CR1_CRCL)){
+
+			//16 bit DFF
+			//1. Load the data into the DR
+
+			pSPIx->SPIx_DR = *((uint16_t*)pTxBuffer);
+			len = len - 2;
+			(uint16_t*)pTxBuffer++;
+
+		}else{
+
+			//8 but DFF
+
+			pSPIx->SPIx_DR = *pTxBuffer;
+			len --;
+			pTxBuffer++;
+
+		}
+
+	}
 }
 
 void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t len){
