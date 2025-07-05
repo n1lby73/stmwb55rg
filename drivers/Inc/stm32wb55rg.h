@@ -18,6 +18,8 @@
 #define RESET						DISABLE
 #define GPIO_PinSet					ENABLE
 #define GPIO_PinReset				DISABLE
+#define FlagSet						ENABLE
+#define FlagReset					DISABLE
 
 /* Bit Position definition of SPI peripheral - CR1 */
 
